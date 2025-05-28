@@ -1,73 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bookmarker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="./CSS/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./CSS/all.min.css">
     <link rel="stylesheet" href="./CSS/style.css">
 </head>
+
 <body>
-  <div class="container text-center">
-    <h1>Bookmarker</h1>
-    <p class="subtitle">Save your favorite digital treasures!</p>
+    <div class="container text-center">
+        <h1>Bookmarker</h1>
+        <p class="subtitle">Save your favorite digital treasures!</p>
 
-    <div class="form-card">
-      <div id="bookmarkForm">
-        <div class="form-group">
-          <i class="fas fa-thumbtack"></i>
-          <input type="text" id="bookmarkName" placeholder="Bookmark Name" required>
-        </div>
-        <div class="form-group">
-          <i class="fas fa-globe"></i>
-          <input type="url" id="websiteUrl" placeholder="Website URL" required>
-        </div>
-        <button class="btn-submit" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save Bookmark</button>
-        <!-- make update btn  -->
-        <button class="btn-update" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
-            <i class="fas fa-edit"></i> Update Bookmark</button>
-      </div>
-    </div>
-
-    <div class="table-card">
-      <div class="table-header">
-        <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input type="text" id="searchInput" placeholder="Search bookmarks...">
-        </div>
-        <div class="sort-controls">
-          <div class="dropdown">
-            <button class="sort-btn" id="sortBtn">Sort by Date <i class="fas fa-chevron-down"></i></button>
-            <div class="dropdown-content" id="sortOptions">
-              <a href="#" data-sort="date">Sort by Date</a>
-              <a href="#" data-sort="alphabetical">Sort Alphabetically</a>
+        <div class="form-card">
+            <div id="bookmarkForm">
+                <div class="form-group">
+                    <i class="fas fa-thumbtack"></i>
+                    <input type="text" id="bookmarkName" placeholder="Bookmark Name" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-globe"></i>
+                    <input type="url" id="websiteUrl" placeholder="Website URL" required>
+                </div>
+                <button class="btn-submit" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save
+                    Bookmark</button>
+                <!-- make update btn  -->
+                <button class="btn-update" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
+                    <i class="fas fa-edit"></i> Update Bookmark</button>
             </div>
-          </div>
-          <div class="view-toggle">
-            <i class="fas fa-th-large view-icon" data-view="grid"></i>
-            <i class="fas fa-list view-icon" data-view="list"></i>
-          </div>
         </div>
-      </div>
-      <table id="bookmarkTable" class="table">
-        <thead>
-          <tr>
-            <th>Index</th>
-            <th>Website Name</th>
-            <th>Visit</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody id="bookmarkList">
 
-        </tbody>
-      </table>
+        <div class="table-card">
+            <div class="table-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search bookmarks...">
+                </div>
+                <div class="sort-controls">
+                    <div class="dropdown">
+                        <button class="sort-btn" id="sortBtn">Sort by Date <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-content" id="sortOptions">
+                            <a href="#" data-sort="date">Sort by Date</a>
+                            <a href="#" data-sort="alphabetical">Sort Alphabetically</a>
+                        </div>
+                    </div>
+                    <div class="view-toggle">
+                        <i class="fas fa-th-large view-icon" id="gridstyle" onclick="gridstyle()"></i>
+                        <i class="fas fa-list view-icon active" id="liststyle" onclick="liststyle()"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="items">
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="./JS/script.js"></script>
+    <script src="./JS/script.js"></script>
 </body>
+
 </html>

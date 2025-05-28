@@ -275,3 +275,8 @@ th {
 .btn-visit i, .btn-update i, .btn-delete i {
   margin-right: 5px;
 }
+.view-toggle .active {
+  color: #333 ;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
