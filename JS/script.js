@@ -1,5 +1,6 @@
 var bookmarkName = document.getElementById("bookmarkName");
 var bookmarkUrl = document.getElementById("websiteUrl");
+var searchInput = document.getElementById("searchInput");
 var currentindex = 0;
 var bookmark = {
     name: bookmarkName,
@@ -67,6 +68,7 @@ function displayBookmarks() {
         for (var i = 0; i < bookmarkList.length; i++) {
             var name = bookmarkList[i].name;
             var url = bookmarkList[i].url;
+            if (name.includes(searchInput.value)) {
             if(viewstyle == "list"){
                 bookmarksResults.innerHTML += `<tr>
                 <td>${i+1}</td>
@@ -95,6 +97,7 @@ function displayBookmarks() {
                         </div>
                     </div>`;
             }
+        }
             
         }
     }
