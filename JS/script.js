@@ -2,12 +2,14 @@ var bookmarkName = document.getElementById("bookmarkName");
 var bookmarkUrl = document.getElementById("websiteUrl");
 var searchInput = document.getElementById("searchInput");
 var currentindex = 0;
+
 var bookmark = {
     name: bookmarkName,
     url: bookmarkUrl,
-    date: new Date().toLocaleDateString()
+    date: new Date().toISOString()
 }
-
+var sortoption = "date"; // Default sort option
+var sortorder = "asc"; // Default sort order
 var bookmarkList = [];
 var viewstyle = "list"; // Default view style
 function toggleViewStyle() {
@@ -39,7 +41,7 @@ function saveBookmark() {
     var bookmark = {
         name: bookmarkName.value,
         url: bookmarkUrl.value,
-        date: new Date().toLocaleDateString()
+        date: new Date().toISOString()
     };
     if (localStorage.getItem("bookmarkList") == null) {
         bookmarkList = [];
@@ -235,9 +237,17 @@ function showRules() {
     document.getElementById("urlRules").showModal();
 }
 function isValidURL(url) {
-    // Regular expression to validate the URL format
-    // make the url must start with http:// or https://
-    // and must contain a valid domain name
     const urlPattern = /^(https?:\/\/)([\w-]+(\.[\w-]+)+)(\/[\w\-\.\/?%&=]*)?$/;
     return urlPattern.test(url);
+}
+function Alphabeticsort() {
+    bookmarkList.sort((a, b) => a.name.localeCompare(b.name));
+    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+    displayBookmarks();
+}
+function datesort() {
+    // Sort the bookmarkList by created date in asc order
+    bookmarkList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+    displayBookmarks();
 }
