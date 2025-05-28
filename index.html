@@ -11,10 +11,11 @@
     <link href="./CSS/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./CSS/all.min.css">
     <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/media.css">
 </head>
 
 <body>
-    <div class="container text-center">
+    <div class="container-fluid container-lg text-center">
         <h1>Bookmarker</h1>
         <p class="subtitle">Save your favorite digital treasures!</p>
 
@@ -37,12 +38,12 @@
         </div>
 
         <div class="table-card">
-            <div class="table-header">
+            <div class="table-header row row-cols-1 row-cols-md-2 justify-content-between">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" oninput="displayBookmarks()" placeholder="Search bookmarks...">
                 </div>
-                <div class="sort-controls">
+                <div class="sort-controls d-flex justify-content-end">
                     <div class="dropdown">
                         <button class="sort-btn" id="sortBtn">Sort by Date <i class="fas fa-chevron-down"></i></button>
                         <div class="dropdown-content" id="sortOptions">

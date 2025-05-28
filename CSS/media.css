@@ -1,0 +1,27 @@
+/* i want a small layout to make the thead disply none */
+
+@media (max-width: 800px) {
+  thead{
+	display: none !important;
+  }
+.search-bar{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .sort-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .sort-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .dropdown-content {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+
