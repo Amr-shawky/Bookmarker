@@ -25,9 +25,10 @@
           <i class="fas fa-globe"></i>
           <input type="url" id="websiteUrl" placeholder="Website URL" required>
         </div>
-        <button class="btn-submit" id="submitBookmark" onclick="addbookmark()"><i class="fas fa-save"></i> Save Bookmark</button>
+        <button class="btn-submit" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save Bookmark</button>
         <!-- make update btn  -->
-        <button class="btn-update" id="updateBookmark" style="display: none;"><i class="fas fa-edit"></i> Update Bookmark</button>
+        <button class="btn-update" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
+            <i class="fas fa-edit"></i> Update Bookmark</button>
       </div>
     </div>
 
@@ -87,6 +88,6 @@
       </table>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="./JS/script.js"></script>
 </body>
 </html>
