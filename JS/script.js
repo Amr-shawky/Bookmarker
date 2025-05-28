@@ -111,7 +111,7 @@ function displayBookmarks() {
                             <img src="./Assets/Images/img4.jpeg" class="card-img-top w-100" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">${name}</h5>
-                                <div class="btns d-flex justify-content-start flex-nowrap" style="height: 55px;">
+                                <div class="btns d-flex justify-content-between flex-nowrap" style="height: 55px;">
                                     <button class="btn-visit" data-url="${url}" onclick="visit(${i})"><i
                                             class="fas fa-eye"></i> Visit</button>
                                     <button class="btn-update" data-index="${i}" onclick="update(${i})"><i
