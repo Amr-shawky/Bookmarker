@@ -10,33 +10,48 @@
     <link rel="stylesheet" href="./CSS/all.min.css">
     <link rel="stylesheet" href="./CSS/style.css">
 </head>
-<body class="dark-mode">
+<body>
   <div class="container">
-    <div class="header">
-      <h1>Bookmarker</h1>
-      <button class="toggle-mode" id="toggleModeBtn">🌙</button>
-    </div>
+    <h1>Bookmarker</h1>
     <p class="subtitle">Save your favorite digital treasures!</p>
 
     <div class="form-card">
-      <form>
+      <div id="bookmarkForm">
         <div class="form-group">
-          <i>📌</i>
-          <input type="text" placeholder="Bookmark Name" required>
+          <i class="fas fa-thumbtack"></i>
+          <input type="text" id="bookmarkName" placeholder="Bookmark Name" required>
         </div>
         <div class="form-group">
-          <i>🌐</i>
-          <input type="url" placeholder="Website URL" required>
+          <i class="fas fa-globe"></i>
+          <input type="url" id="websiteUrl" placeholder="Website URL" required>
         </div>
-        <button type="submit" class="submit">Submit</button>
-      </form>
+        <button class="btn-submit" id="submitBookmark" onclick="addbookmark()"><i class="fas fa-save"></i> Save Bookmark</button>
+        <!-- make update btn  -->
+        <button class="btn-update" id="updateBookmark" style="display: none;"><i class="fas fa-edit"></i> Update Bookmark</button>
+      </div>
     </div>
 
     <div class="table-card">
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search Bookmarks..." onkeyup="searchBookmarks()">
+      <div class="table-header">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search bookmarks...">
+        </div>
+        <div class="sort-controls">
+          <div class="dropdown">
+            <button class="sort-btn" id="sortBtn">Sort by Date <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content" id="sortOptions">
+              <a href="#" data-sort="date">Sort by Date</a>
+              <a href="#" data-sort="alphabetical">Sort Alphabetically</a>
+            </div>
+          </div>
+          <div class="view-toggle">
+            <i class="fas fa-th-large view-icon" data-view="grid"></i>
+            <i class="fas fa-list view-icon" data-view="list"></i>
+          </div>
+        </div>
       </div>
-      <table id="bookmarkTable">
+      <table id="bookmarkTable" class="table">
         <thead>
           <tr>
             <th>Index</th>
@@ -46,33 +61,32 @@
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="bookmarkList">
           <tr>
             <td>1</td>
             <td>Bookmarker</td>
-            <td><button class="btn-visit"><i>🌐</i>Visit</button></td>
-            <td><button class="btn-update"><i>🔄</i>Update</button></td>
-            <td><button class="btn-delete"><i>🗑️</i>Delete</button></td>
+            <td><button class="btn-visit" data-url="https://example.com"><i class="fas fa-eye"></i> Visit</button></td>
+            <td><button class="btn-update" data-index="1"><i class="fas fa-edit"></i> Update</button></td>
+            <td><button class="btn-delete" data-index="1"><i class="fas fa-trash"></i> Delete</button></td>
           </tr>
           <tr>
             <td>2</td>
             <td>Another Site</td>
-            <td><button class="btn-visit"><i>🌐</i>Visit</button></td>
-            <td><button class="btn-update"><i>🔄</i>Update</button></td>
-            <td><button class="btn-delete"><i>🗑️</i>Delete</button></td>
+            <td><button class="btn-visit" data-url="https://example.com"><i class="fas fa-eye"></i> Visit</button></td>
+            <td><button class="btn-update" data-index="2"><i class="fas fa-edit"></i> Update</button></td>
+            <td><button class="btn-delete" data-index="2"><i class="fas fa-trash"></i> Delete</button></td>
           </tr>
           <tr>
             <td>3</td>
             <td>Third Site</td>
-            <td><button class="btn-visit"><i>🌐</i>Visit</button></td>
-            <td><button class="btn-update"><i>🔄</i>Update</button></td>
-            <td><button class="btn-delete"><i>🗑️</i>Delete</button></td>
+            <td><button class="btn-visit" data-url="https://example.com"><i class="fas fa-eye"></i> Visit</button></td>
+            <td><button class="btn-update" data-index="3"><i class="fas fa-edit"></i> Update</button></td>
+            <td><button class="btn-delete" data-index="3"><i class="fas fa-trash"></i> Delete</button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
