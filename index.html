@@ -28,10 +28,10 @@
                     <i class="fas fa-globe"></i>
                     <input type="url" id="websiteUrl" placeholder="Website URL" required>
                 </div>
-                <button class="btn-submit" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save
+                <button class="btn-submit is-invalid" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save
                     Bookmark</button>
                 <!-- make update btn  -->
-                <button class="btn-update" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
+                <button class="btn-update is-invalid" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
                     <i class="fas fa-edit"></i> Update Bookmark</button>
             </div>
         </div>
@@ -61,6 +61,8 @@
         </div>
     </div>
     <script src="./JS/script.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </body>
 
 </html>

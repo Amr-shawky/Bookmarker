@@ -8,12 +8,12 @@ var bookmark = {
     date: new Date().toLocaleDateString()
 }
 
-var bookmarkList= [];
+var bookmarkList = [];
 var viewstyle = "list"; // Default view style
 function toggleViewStyle() {
-var items = document.getElementById("items");
-if (viewstyle == "list") {
-    items.innerHTML = `<table id="bookmarkTable" class="table">
+    var items = document.getElementById("items");
+    if (viewstyle == "list") {
+        items.innerHTML = `<table id="bookmarkTable" class="table">
             <thead>
               <tr>
                 <th>Index</th>
@@ -27,11 +27,11 @@ if (viewstyle == "list") {
     
             </tbody>
           </table>`;
-}
-else {
-    items.innerHTML =`<div id="bookmarkList"class="row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+    }
+    else {
+        items.innerHTML = `<div id="bookmarkList"class="row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
     </div>`;
-}
+    }
 }
 toggleViewStyle(); // Initialize the view style
 function saveBookmark() {
@@ -41,20 +41,45 @@ function saveBookmark() {
         url: bookmarkUrl.value,
         date: new Date().toLocaleDateString()
     };
-
     if (localStorage.getItem("bookmarkList") == null) {
         bookmarkList = [];
         bookmarkList.push(bookmark);
         localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
     }
     else {
+        // if the name or url is existing in the bookmarkList, alert the user
+        for (var i = 0; i < bookmarkList.length; i++) {
+            if (bookmarkList[i].name === bookmark.name || bookmarkList[i].url === bookmark.url) {
+                swal({
+                    title: "Duplicate Bookmark",
+                    text: "A bookmark with this name or URL already exists.",
+                    icon: "error",
+                    button: "OK",
+                });
+                return; // Exit the function if a duplicate is found
+            }
+        }
+        // if the url is not matching the regex pattern, alert the user
+        // var urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/;
+        if (!isValidURL(bookmark.url)) {
+            swal({
+                title: "Invalid URL",
+                text: "Please enter a valid URL with the following rules:\n" +
+                    "- Start with 'http://' or 'https://'\n" +
+                    "- Include a valid domain (e.g., example.com)\n" +
+                    "- Optionally include a path or parameters (e.g., /page or ?id=123)\n" +
+                    "- Example: https://www.example.com",
+                icon: "error",
+                button: "OK",
+            });
+            bookmarkUrl.value = ""; // Clear the input field
+            return; // Exit the function if the URL is invalid
+        }
         bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
         bookmarkList.push(bookmark);
         // Update the localStorage with the new bookmark list
         localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
     }
-    console.log(bookmarkList);
-
     // Clear the input fields after saving
     bookmarkName.value = "";
     bookmarkUrl.value = "";
@@ -64,22 +89,22 @@ function displayBookmarks() {
     if (localStorage.getItem("bookmarkList") !== null) {
         bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
         toggleViewStyle(); // Initialize the view style
-                        var bookmarksResults = document.getElementById("bookmarkList");
+        var bookmarksResults = document.getElementById("bookmarkList");
         for (var i = 0; i < bookmarkList.length; i++) {
             var name = bookmarkList[i].name;
             var url = bookmarkList[i].url;
             if (name.includes(searchInput.value)) {
-            if(viewstyle == "list"){
-                bookmarksResults.innerHTML += `<tr>
-                <td>${i+1}</td>
+                if (viewstyle == "list") {
+                    bookmarksResults.innerHTML += `<tr>
+                <td>${i + 1}</td>
                 <td>${name}</td>
                 <td><button class="btn-visit" data-url="${url}" onclick="visit(${i})"><i class="fas fa-eye"></i> Visit</button></td>
                 <td><button class="btn-update" data-index="${i}"onclick="update(${i})"><i class="fas fa-edit"></i> Update</button></td>
                 <td><button class="btn-delete" data-index="${i}" onclick="deleteBookmark(${i})"><i class="fas fa-trash"></i> Delete</button></td>
               </tr>`
-            }
-            else{
-                bookmarksResults.innerHTML += `                    <div class="col">
+                }
+                else {
+                    bookmarksResults.innerHTML += `                    <div class="col">
                         <div class="card">
                             <img src="./Assets/Images/img4.jpeg" class="card-img-top w-100" alt="...">
                             <div class="card-body">
@@ -96,9 +121,9 @@ function displayBookmarks() {
                             </div>
                         </div>
                     </div>`;
+                }
             }
-        }
-            
+
         }
     }
     else {
@@ -165,4 +190,11 @@ function liststyle() {
     gridbutton.classList.remove("active");
     toggleViewStyle();
     displayBookmarks();
+}
+function showRules() {
+    document.getElementById("urlRules").showModal();
+}
+function isValidURL(url) {
+    const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([/?].*)?$/i;
+    return urlPattern.test(url);
 }
