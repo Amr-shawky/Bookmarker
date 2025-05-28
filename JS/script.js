@@ -158,9 +158,49 @@ function update(index) {
 
 function updateBookmark() {
     // Update the bookmark in the bookmarkList
+    for (var i = 0; i < bookmarkList.length; i++) {
+        if (i !== currentindex) {
+            if (bookmarkList[i].name === bookmarkName.value || bookmarkList[i].url === bookmarkUrl.value) {
+                swal({
+                    title: "Duplicate Bookmark",
+                    text: "A bookmark with this name or URL already exists.",
+                    icon: "error",
+                    button: "OK",
+                });
+                bookmarkName.value = ""; // Clear the input field
+                bookmarkUrl.value = ""; // Clear the input field
+                var updateButton = document.getElementById("updateBookmark");
+                updateButton.style.display = "none";
+                var saveButton = document.getElementById("submitBookmark");
+                saveButton.style.display = "inline-block";
+                return; // Exit the function if a duplicate is found
+            }
+        }
+    }
+    // if the url is not matching the regex pattern, alert the user
+    // var urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w- .\/?%&=]*)?$/;
+    if (!isValidURL(bookmarkUrl.value)) {
+        swal({
+            title: "Invalid URL",
+            text: "Please enter a valid URL with the following rules:\n" +
+                "- Start with 'http://' or 'https://'\n" +
+                "- Include a valid domain (e.g., example.com)\n" +
+                "- Optionally include a path or parameters (e.g., /page or ?id=123)\n" +
+                "- Example: https://www.example.com",
+            icon: "error",
+            button: "OK",
+        });
+        bookmarkUrl.value = ""; // Clear the input field
+        var updateButton = document.getElementById("updateBookmark");
+        updateButton.style.display = "none";
+        var saveButton = document.getElementById("submitBookmark");
+        saveButton.style.display = "inline-block";
+        return; // Exit the function if the URL is invalid
+    }
     bookmarkList[currentindex].name = bookmarkName.value;
     bookmarkList[currentindex].url = bookmarkUrl.value;
     // Update the localStorage with the modified bookmark list
+
     localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
     // Clear the input fields after updating
     bookmarkName.value = "";
@@ -195,6 +235,9 @@ function showRules() {
     document.getElementById("urlRules").showModal();
 }
 function isValidURL(url) {
-    const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([/?].*)?$/i;
+    // Regular expression to validate the URL format
+    // make the url must start with http:// or https://
+    // and must contain a valid domain name
+    const urlPattern = /^(https?:\/\/)([\w-]+(\.[\w-]+)+)(\/[\w\-\.\/?%&=]*)?$/;
     return urlPattern.test(url);
 }
