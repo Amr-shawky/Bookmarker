@@ -22,6 +22,13 @@
     box-shadow: none;
     border-radius: 0;
   }
+
+}
+@media (max-width: 450px) {
+  .btn-visit, .btn-update, .btn-delete {
+    padding: 2px 3px !important;
+    font-size: 0.8rem !important;
+  }
 }
 
 
