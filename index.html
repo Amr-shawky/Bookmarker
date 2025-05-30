@@ -31,7 +31,6 @@
                 </div>
                 <button class="btn-submit is-invalid" id="submitBookmark" onclick="saveBookmark()"><i class="fas fa-save"></i> Save
                     Bookmark</button>
-                <!-- make update btn  -->
                 <button class="btn-update is-invalid" id="updateBookmark" onclick="updateBookmark()" style="display: none;">
                     <i class="fas fa-edit"></i> Update Bookmark</button>
             </div>
@@ -41,7 +40,7 @@
             <div class="table-header row row-cols-1 row-cols-md-2 justify-content-between">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" oninput="displayBookmarks()" placeholder="Search bookmarks...">
+                    <input type="text" id="searchInput" oninput="searchBookmarks()" placeholder="Search bookmarks...">
                 </div>
                 <div class="sort-controls d-flex justify-content-end">
                     <div class="dropdown">
@@ -59,11 +58,11 @@
             </div>
             <div id="items">
             </div>
+            <div id="pagination" class="mt-3"></div>
         </div>
     </div>
     <script src="./JS/script.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 </body>
 
 </html>
