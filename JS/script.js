@@ -38,6 +38,7 @@ function toggleViewStyle() {
     </div>`;
     }
 }
+// 
 toggleViewStyle(); // Initialize the view style
 
 function saveBookmark() {
@@ -50,41 +51,60 @@ function saveBookmark() {
         bookmarkList = [];
         bookmarkList.push(bookmark);
         localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
-    }
-    else {
-        for (var i = 0; i < bookmarkList.length; i++) {
-            if (bookmarkList[i].name === bookmark.name || bookmarkList[i].url === bookmark.url) {
+        bookmarkName.value = "";
+        bookmarkUrl.value = "";
+        currentPage = 1; // Reset to first page
+        displayBookmarks();
+    } else {
+        swal({
+            title: "Add Bookmark",
+            text: "Are you sure you want to add this bookmark?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willAdd) => {
+            if (!willAdd) {
+                bookmarkName.value = "";
+                bookmarkUrl.value = "";
+                return;
+            }
+
+            bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
+
+            for (var i = 0; i < bookmarkList.length; i++) {
+                if (bookmarkList[i].name === bookmark.name || bookmarkList[i].url === bookmark.url) {
+                    swal({
+                        title: "Duplicate Bookmark",
+                        text: "A bookmark with this name or URL already exists.",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+            }
+            if (!isValidURL(bookmark.url)) {
                 swal({
-                    title: "Duplicate Bookmark",
-                    text: "A bookmark with this name or URL already exists.",
+                    title: "Invalid URL",
+                    text: "Please enter a valid URL with the following rules:\n" +
+                        "- Start with 'http://' or 'https://'\n" +
+                        "- Include a valid domain (e.g., example.com)\n" +
+                        "- Optionally include a path or parameters (e.g., /page or ?id=123)\n" +
+                        "- Example: https://www.example.com",
                     icon: "error",
                     button: "OK",
                 });
+                bookmarkUrl.value = "";
                 return;
             }
-        }
-        if (!isValidURL(bookmark.url)) {
-            swal({
-                title: "Invalid URL",
-                text: "Please enter a valid URL with the following rules:\n" +
-                    "- Start with 'http://' or 'https://'\n" +
-                    "- Include a valid domain (e.g., example.com)\n" +
-                    "- Optionally include a path or parameters (e.g., /page or ?id=123)\n" +
-                    "- Example: https://www.example.com",
-                icon: "error",
-                button: "OK",
-            });
+
+            bookmarkList.push(bookmark);
+            localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+            bookmarkName.value = "";
             bookmarkUrl.value = "";
-            return;
-        }
-        bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
-        bookmarkList.push(bookmark);
-        localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+            currentPage = 1; // Reset to first page
+            displayBookmarks();
+        });
     }
-    bookmarkName.value = "";
-    bookmarkUrl.value = "";
-    currentPage = 1; // Reset to first page
-    displayBookmarks();
 }
 
 function displayBookmarks() {
@@ -94,18 +114,18 @@ function displayBookmarks() {
         bookmarkList = [];
         localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
     }
-    var filteredBookmarks = bookmarkList.filter(function(bookmark) {
+    var filteredBookmarks = bookmarkList.filter(function (bookmark) {
         return bookmark.name.toLowerCase().includes(searchInput.value.toLowerCase());
     });
     var totalPages = Math.ceil(filteredBookmarks.length / pageSize);
     var startIndex = (currentPage - 1) * pageSize;
     var endIndex = startIndex + pageSize;
     var bookmarksToDisplay = filteredBookmarks.slice(startIndex, endIndex);
-    
+
     toggleViewStyle();
     var bookmarksResults = document.getElementById("bookmarkList");
     bookmarksResults.innerHTML = '';
-    
+
     if (filteredBookmarks.length === 0) {
         if (viewstyle == "list") {
             bookmarksResults.innerHTML = '<tr><td colspan="5">No bookmarks found.</td></tr>';
@@ -176,10 +196,25 @@ function displayBookmarks() {
 displayBookmarks();
 
 function deleteBookmark(index) {
-    bookmarkList.splice(index, 1);
-    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
-    currentPage = 1; // Reset to first page
-    displayBookmarks();
+    // make a swal that say are you sure you want to delete this bookmark?
+    swal({
+        title: "Delete Bookmark",
+        text: "Are you sure you want to delete this bookmark?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            bookmarkList.splice(index, 1);
+            localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+            currentPage = 1; // Reset to first page
+            displayBookmarks();
+        } else {
+            swal("Your bookmark is safe!");
+            return;
+        }
+    });
+
 }
 
 function visit(index) {
@@ -235,17 +270,38 @@ function updateBookmark() {
         saveButton.style.display = "inline-block";
         return;
     }
-    bookmarkList[currentindex].name = bookmarkName.value;
-    bookmarkList[currentindex].url = bookmarkUrl.value;
-    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
-    bookmarkName.value = "";
-    bookmarkUrl.value = "";
-    var updateButton = document.getElementById("updateBookmark");
-    updateButton.style.display = "none";
-    var saveButton = document.getElementById("submitBookmark");
-    saveButton.style.display = "inline-block";
-    currentPage = 1; // Reset to first page
-    displayBookmarks();
+    else {
+        // make a swal that say are you sure you want to update this bookmark?
+        swal({
+            title: "Update Bookmark",
+            text: "Are you sure you want to update this bookmark?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willUpdate) => {
+            if (willUpdate) {
+                bookmarkList[currentindex].name = bookmarkName.value;
+                bookmarkList[currentindex].url = bookmarkUrl.value;
+                localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
+                bookmarkName.value = "";
+                bookmarkUrl.value = "";
+                var updateButton = document.getElementById("updateBookmark");
+                updateButton.style.display = "none";
+                var saveButton = document.getElementById("submitBookmark");
+                saveButton.style.display = "inline-block";
+                currentPage = 1; // Reset to first page
+                displayBookmarks();
+            } else {
+                bookmarkName.value = "";
+                bookmarkUrl.value = "";
+                var updateButton = document.getElementById("updateBookmark");
+                updateButton.style.display = "none";
+                var saveButton = document.getElementById("submitBookmark");
+                saveButton.style.display = "inline-block";
+            }
+        });
+    }
+
 }
 
 function gridstyle() {
