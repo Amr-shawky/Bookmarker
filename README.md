@@ -9,7 +9,6 @@ A simple web application to save and manage your favorite website bookmarks. Bui
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 - Add new bookmarks with a name and valid URL.
@@ -54,5 +53,3 @@ Check out the live page hosted on GitHub Pages here: [https://amr-shawky.github.
 ## Contributing
 Feel free to fork this repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
-This project is open-source and available under the [MIT License](LICENSE).
