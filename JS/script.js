@@ -329,6 +329,11 @@ function isValidURL(url) {
     return urlPattern.test(url);
 }
 
+function isValidName(name) {
+    const namePattern  = /^[A-Z][a-z]{3,}$/;
+    return namePattern.test(name);
+}
+
 function Alphabeticsort() {
     bookmarkList.sort((a, b) => a.name.localeCompare(b.name));
     localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
@@ -352,3 +357,31 @@ function goToPage(page) {
     currentPage = page;
     displayBookmarks();
 }
+
+function validatename(){
+    if(isValidName(bookmarkName.value)){
+        bookmarkName.classList.remove("is-invalid");
+        bookmarkName.classList.add("is-valid");
+    }
+    else{
+        bookmarkName.classList.add("is-invalid");
+        bookmarkName.classList.remove("is-valid");
+    }
+    }
+
+    function validateurl(){
+    if(isValidURL(bookmarkUrl.value)){
+        bookmarkUrl.classList.remove("is-invalid");
+        bookmarkUrl.classList.add("is-valid");
+    }
+    else{
+        bookmarkUrl.classList.add("is-invalid");
+        bookmarkUrl.classList.remove("is-valid");
+    }
+    }
+// var element = document.querySelectorAll(".btn");
+// for (var i = 0; i < element.length; i++) {
+//     element[i].addEventListener("click", function (event) {
+//         event.target.classList.replace("btn-danger", "btn-success");
+//     });
+// }
